@@ -208,6 +208,26 @@ class User(Model):
             error = True
 
         #Validate password
+        if password != '':
+
+            if len(password) < 8:
+                error_dict['passwordError'] = "Password must be greater than 8 characters"
+                error = True
+
+            elif not passwordRegex.match(password):
+                error_dict['passwordError'] = "Password must contain at least one lowercase letter, one uppercase letter, and one digit"
+                error = True
+
+            if confirm_password == '':
+                error_dict['confirmPasswordError'] = "Confirm Password cannot be blank."
+                error = True
+            elif confirm_password != password :
+                 error_dict['confirmPasswordError'] = "Passwords do not match."
+                 error = True
+            pw_hash = self.bcrypt.generate_password_hash(password)
+            password_update_query = "UPDATE users set password = :password where id = :userId"
+            password_data = {'password': pw_hash, 'userId':id}
+            self.db.query_db(password_update_query, password_data)     
                
 
         #Check if there were any errors in the previous validation process
@@ -215,7 +235,7 @@ class User(Model):
             return {"status" : False, "error_dict": error_dict}
 
         #Add user to database if no errors then return the id for login purposes
-       # pw_hash = self.bcrypt.generate_password_hash(password)
+        
         update_query = "UPDATE users set first_name =:first_name, last_name=:last_name, alias=:alias, email=:email, updated_at=NOW() where id=:userId"
         print update_query
         data = {'first_name':first_name,
