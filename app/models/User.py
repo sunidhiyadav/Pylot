@@ -84,6 +84,7 @@ class User(Model):
         email = register_info['email']
         password = register_info['password']
         confirm_password = register_info['confirm_password']
+        dob = register_info['dob']
 
         error_dict = {}
         error = False
@@ -147,12 +148,13 @@ class User(Model):
 
         #Add user to database if no errors then return the id for login purposes
         pw_hash = self.bcrypt.generate_password_hash(password)
-        insert_query = "INSERT INTO users (first_name, last_name, alias, email, password, created_at, updated_at) VALUES (:first_name, :last_name, :alias, :email, :password, NOW(), NOW())"
+        insert_query = "INSERT INTO users (first_name, last_name, alias, email, password,dob, created_at, updated_at) VALUES (:first_name, :last_name, :alias, :email, :password,:dob, NOW(), NOW())"
         data = {'first_name':first_name,
             'last_name':last_name,
             'alias':alias,
             'email':email,
-            'password':pw_hash}
+            'password':pw_hash,
+            'dob':dob}
         self.db.query_db(insert_query, data)
 
         query = "SELECT * FROM users where email=:email"
@@ -248,4 +250,37 @@ class User(Model):
         query = "SELECT * FROM users where id=:userId"
         data ={'userId': id}
         users = self.db.query_db(query, data)
-        return{"status": True, "user": users[0]}    
+        return{"status": True, "user": users[0]}
+
+    def get_all_friends (self, id):
+        query = "SELECT u.id as friendId, u.alias from friendLists f inner join users u on f.friend_id = u.id where user_id =:userId"
+        data ={'userId': id}
+        users = self.db.query_db(query,data)   
+        return users
+        
+    def get_friends (self, id):
+        query = "SELECT u.id as friendId, u.alias from friendLists f inner join users u on f.user_id = u.id where friend_id =:userId"
+        data ={'userId': id}
+        friends = self.db.query_db(query,data)   
+        return friends     
+
+    def get_not_friends (self, id):
+        query = "select u.alias,u.id as uId from users u where u.id not in(select f.friend_id from friendLists f where f.user_id =:userId) and u.id!=:userId"
+        data ={'userId': id}
+        not_friend = self.db.query_db(query,data)   
+        return not_friend
+
+    def delete_friend (self, friend_id,uId):
+        query = "DELETE from friendLists WHERE friend_id =:friend_id and user_id=:uId"
+        data = {'friend_id' : friend_id,
+                'uId':uId}
+        res = self.db.query_db(query, data)
+        return res    
+
+    def add_friend (self, friend_id,uId):
+        query = "INSERT into friendLists (friend_id, user_id) values(:friend_id,:uId)"
+        data = {'friend_id' : friend_id,
+                'uId':uId}
+        self.db.query_db(query, data)
+    
+                 

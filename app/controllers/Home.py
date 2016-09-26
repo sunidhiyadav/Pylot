@@ -37,5 +37,9 @@ class Home(Controller):
             session['last_name']=''
             return redirect('/users/login')
 
-        user_detail = self.models['User'].get_user(session['userId'])
-        return self.load_view('/home/index.html', user_detail = user_detail)
+        #user_detail = self.models['User'].get_user(session['userId'])
+        friend_details = self.models['User'].get_all_friends(session['userId'])
+        user_details = self.models['User'].get_friends(session['userId'])
+        print friend_details
+        not_friends = self.models['User'].get_not_friends(session['userId'])
+        return self.load_view('/home/index.html', friend_details = friend_details, not_friends =not_friends)

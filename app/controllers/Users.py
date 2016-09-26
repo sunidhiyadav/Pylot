@@ -63,7 +63,8 @@ class Users(Controller):
             "alias": request.form['alias'],
             "email": request.form['email'], 
             "password": request.form['password'],
-            "confirm_password": request.form['confirm_password']
+            "confirm_password": request.form['confirm_password'],
+            "dob" :request.form['dob']
         }
 
         register_status = self.models['User'].register(register_info)
@@ -116,4 +117,19 @@ class Users(Controller):
         session['userId'] = ''
         session['First_name'] = ''
         session['last_name'] = ''
-        return redirect ('/')	   
+        return redirect ('/')
+
+    def friend_detail(self, id):
+        friend_detail = self.models['User'].get_user(id)
+        return self.load_view('/home/detail.html', friend_detail = friend_detail)
+
+    def friend_delete(self, id):
+        one_friend = self.models['User'].delete_friend(id, session['userId'])
+        return redirect('/')
+
+    def friend_add(self, id):
+        one_friend = self.models['User'].add_friend(id, session['userId'])
+        return redirect('/')      
+
+
+

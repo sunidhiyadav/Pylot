@@ -42,6 +42,7 @@ td, th {
           <ul class="nav navbar-nav navbar-right">
               <li><a href="/users/logoff">Logoff</a></li>
           </ul>
+          <a class="navbar-brand navbar-right" href="/">Home</a>
       </div>  
   </div>
 </nav>
@@ -50,52 +51,9 @@ td, th {
       <div class="col-md-10">
           <div class="row">
               <div class="col-md-6">
-              {% if not friend_details %}
-                <h4>You don't have friends yet</h4><br>
-              {% endif %}
-              {% if friend_details %}
-                <h4>Here is the lists of your friends:</h4><br>
-                      <table>
-                        <tr>
-                          <th>Alias</th>
-                          <th>Action</th>
-                        </tr>
-                      {% for friend_detail in friend_details %}
-                      
-                        <tr>
-                         <td>{{friend_detail['alias']}}</td>
-
-                         <td>
-                         <a href="/home/{{friend_detail['friendId']}}"> View Profile</a> 
-                         <a href="/home/delete_friend/{{friend_detail['friendId']}}">Remove as Friend</a>
-
-                         </td>
-                        
-                        </tr>
-                      {% endfor %}
-                      </table>
-              {% endif %}
-             <br><br>
-
-              {% if not_friends %}
-                <h4>Other users not on your friend lists:</h4>
-                      <table>
-                        <tr>
-                          <th>Alias</th>
-                          <th>Action</th>
-                        </tr>
-                      {% for not_friend in not_friends %}
-                      
-                        <tr>
-                         <td><a href="/home/{{not_friend['uId']}}">{{not_friend['alias']}}</a></td>
-                         <td>
-                         <a href="/home/add_friend/{{not_friend['uId']}}">Add as Friend</a>
-                         </td>
-                        
-                        </tr>
-                      {% endfor %}
-                     </table> 
-              {% endif %}
+              <h4>{{friend_detail['alias']}} profile detail</h4>
+              <p><strong>Name: </strong>{{friend_detail['first_name']}} {{friend_detail['first_name']}}</p>
+              <p><strong>Email: </strong>{{friend_detail['email']}}</p>
              
               </div>
           </div>          

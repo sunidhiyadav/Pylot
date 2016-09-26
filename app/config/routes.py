@@ -21,8 +21,11 @@ routes['GET']['/users/login'] = 'Users#login_form'
 routes['POST']['/users/login'] = 'Users#login'
 routes['POST']['/users/register'] = 'Users#register'
 routes['/users/logoff'] = 'Users#logoff'
-routes['GET']['/home/edit/<int:id>'] = 'Users#user_detail'
-routes['POST']['/home/<int:id>'] = 'Users#edit_user_details'
+routes['GET']['/home/<int:id>'] = 'Users#friend_detail'
+routes['GET']['/home/delete_friend/<int:id>'] = 'Users#friend_delete'
+routes['GET']['/home/add_friend/<int:id>'] = 'Users#friend_add'
+
+
 """
     You can add routes and specify their handlers as follows:
 
