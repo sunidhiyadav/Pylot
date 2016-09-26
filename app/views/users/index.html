@@ -1,0 +1,137 @@
+<!Doctype html>
+<html>
+<head>
+   <link rel="stylesheet" href="/static/css/styles.css" type="text/css">
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <title>Registration/Login form</title>
+  <style>
+    .error{
+      color:red;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="row">
+      <div class="col-xs-12 col-sm-8 col-md-6 col-sm-offset-2 col-md-offset-3">
+        <form role="form" action='/users/register' method='post'>
+          <h2>Register Here </h2>
+          <hr class="colorgraph">
+           <div class="row">
+            <div class="col-xs-12 col-sm-6 col-md-6">
+              <div class="form-group">
+                  <input type="text" name="first_name" id="first_name" class="form-control input-lg" placeholder="First Name" tabindex="1">
+            </div>
+                {%with errors = get_flashed_messages(category_filter=["firstNameError"]) %}
+                        {% if errors %}
+                            {% for error in errors %}
+                                <p class="error">{{error}}</p>
+                            {%endfor%}
+                        {%endif%}
+                {%endwith%}
+            </div>
+            <div class="col-xs-12 col-sm-6 col-md-6">
+              <div class="form-group">
+               <input type="text" name="last_name" id="last_name" class="form-control input-lg" placeholder="Last Name" tabindex="2">
+             </div>
+             {%with errors = get_flashed_messages(category_filter=["lastNameError"]) %}
+                        {% if errors %}
+                            {% for error in errors %}
+                                <p class="error">{{error}}</p>
+                            {%endfor%}
+                        {%endif%}
+             {%endwith%}
+           </div>
+         </div>
+         <div class="form-group">
+           <input type="alias" name="alias" id="alias" class="form-control input-lg" placeholder="Alias" tabindex="4">
+         </div>
+                {%with errors = get_flashed_messages(category_filter=["aliasError"]) %}
+                        {% if errors %}
+                            {% for error in errors %}
+                                <p class="error">{{error}}</p>
+                            {%endfor%}
+                        {%endif%}
+                {%endwith%}
+         <div class="form-group">
+          <input type="email" name="email" id="email" class="form-control input-lg" placeholder="Email Address" tabindex="4">
+        </div>
+        {%with errors = get_flashed_messages(category_filter=["emailError"]) %}
+                        {% if errors %}
+                            {% for error in errors %}
+                                <p class="error">{{error}}</p>
+                            {%endfor%}
+                        {%endif%}
+                {%endwith%}
+        <div class="row">
+          <div class="col-xs-12 col-sm-6 col-md-6">
+            <div class="form-group">
+             <input type="password" name="password" id="password" class="form-control input-lg" placeholder="Password" tabindex="5">
+           </div>
+           {%with errors = get_flashed_messages(category_filter=["passwordError"]) %}
+                        {% if errors %}
+                            {% for error in errors %}
+                                <p class="error">{{error}}</p>
+                            {%endfor%}
+                        {%endif%}
+                {%endwith%}
+         </div>
+         <div class="col-xs-12 col-sm-6 col-md-6">
+          <div class="form-group">
+            <input type="password" name="confirm_password" id="confirm_password" class="form-control input-lg" placeholder="Confirm Password" tabindex="6">
+          </div>
+          {%with errors = get_flashed_messages(category_filter=["confirmPasswordError"]) %}
+                        {% if errors %}
+                            {% for error in errors %}
+                                <p class="error">{{error}}</p>
+                            {%endfor%}
+                        {%endif%}
+                {%endwith%}
+        </div>
+      </div>
+
+      <hr class="colorgraph">
+      <div class="row">
+        <div class="col-xs-12 col-md-6"><input type="submit" value="Register" class="btn btn-primary btn-block btn-lg" tabindex="7"></div>
+      </div>
+    </form>
+  </div>
+</div><div class="row" style="margin-top:20px">
+<div class="col-xs-12 col-sm-8 col-md-6 col-sm-offset-2 col-md-offset-3">
+  <form role="form" action='/users/login' method='post'>
+    <fieldset>
+      <h2>Login Here</h2>
+      <hr class="colorgraph">
+      <div class="form-group">
+        <input type="email" name="email" id="email" class="form-control input-lg" placeholder="Email Address">
+      </div>
+       {%with errors = get_flashed_messages(category_filter=["loginEmailError"]) %}
+                        {% if errors %}
+                            {% for error in errors %}
+                                <p class="error">{{error}}</p>
+                            {%endfor%}
+                        {%endif%}
+                        {%endwith%}
+      <div class="form-group">
+        <input type="password" name="password" id="password" class="form-control input-lg" placeholder="Password">
+      </div>
+          {%with errors = get_flashed_messages(category_filter=["loginPasswordError"]) %}
+              {% if errors %}
+                  {% for error in errors %}
+                      <p class="error">{{error}}</p>
+                  {%endfor%}
+              {%endif%}
+          {%endwith%}
+      <hr class="colorgraph">
+      <div class="row">
+        <div class="col-xs-6 col-sm-6 col-md-6">
+          <input type="submit" class="btn btn-lg btn-success btn-block" value="Login">
+        </div>
+
+      </div>
+    </fieldset>
+  </form>
+</div>
+</div>
+</div>
+</body>
