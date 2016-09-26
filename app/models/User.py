@@ -257,7 +257,6 @@ class User(Model):
         data ={'userId': id}
         users = self.db.query_db(query,data)   
         return users
-        
     def get_friends (self, id):
         query = "SELECT u.id as friendId, u.alias from friendLists f inner join users u on f.user_id = u.id where friend_id =:userId"
         data ={'userId': id}
@@ -275,6 +274,13 @@ class User(Model):
         data = {'friend_id' : friend_id,
                 'uId':uId}
         res = self.db.query_db(query, data)
+        return res
+
+    def delete (self, uId, friend_id):
+        query = "DELETE from friendLists WHERE friend_id =:friend_id and user_id=:uId"
+        data = {'friend_id' : uId,
+                'uId':friend_id}
+        res = self.db.query_db(query, data)
         return res    
 
     def add_friend (self, friend_id,uId):
@@ -282,5 +288,10 @@ class User(Model):
         data = {'friend_id' : friend_id,
                 'uId':uId}
         self.db.query_db(query, data)
-    
+
+    def add (self,uId,friend_id):
+        query = "INSERT into friendLists (user_id, friend_id) values(:uId,:friend_id)"
+        data = {'friend_id' : uId,
+                'uId':friend_id}
+        self.db.query_db(query, data)    
                  

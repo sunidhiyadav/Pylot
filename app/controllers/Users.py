@@ -125,10 +125,12 @@ class Users(Controller):
 
     def friend_delete(self, id):
         one_friend = self.models['User'].delete_friend(id, session['userId'])
+        friend = self.models['User'].delete(session['userId'], id)
         return redirect('/')
 
     def friend_add(self, id):
         one_friend = self.models['User'].add_friend(id, session['userId'])
+        friend = self.models['User'].add(session['userId'], id)
         return redirect('/')      
 
 
