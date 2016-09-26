@@ -32,6 +32,7 @@ class StagingDBConfig(DBConfig):
 """ Put Production Specific Configurations here """
 class ProductionDBConfig(DBConfig):
     DB_USERNAME = 'root'
-    DB_PASSWORD = ''
+    DB_PASSWORD = 'root'
     DB_DATABASE_NAME = 'pythonexamdb'
     DB_HOST = 'localhost'
+    DB_PORT = 3306
